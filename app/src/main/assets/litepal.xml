@@ -1,0 +1,12 @@
+<litepal>
+
+    <dbname value="New"/>
+<!--    数据库名字-->
+
+    <version value="1"/>
+<!--版本-->
+    <list>
+        <mapping class="com.example.newstime.Gson.newslist"/>
+    </list>
+
+</litepal>
