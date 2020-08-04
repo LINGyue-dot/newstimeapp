@@ -7,6 +7,7 @@
 <!--版本-->
     <list>
         <mapping class="com.example.newstime.Gson.newslist"/>
+        <mapping class="com.example.newstime.Gson.yiyunlist"/>
     </list>
 
 </litepal>

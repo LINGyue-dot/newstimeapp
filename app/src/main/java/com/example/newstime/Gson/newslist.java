@@ -29,21 +29,21 @@ public class newslist extends DataSupport {
         this.url=url;
     }
 
-    public void setTitle(String title){
-        this.titles=title;
-    }
-
-    public String  getTitle(){
-        return  titles;
-    }
-
-    public  void setUrl(String url){
-        this.url=url;
-    }
-
-    public  String getUrl(){
-        return url;
-    }
+//    public void setTitle(String title){
+//        this.titles=title;
+//    }
+//
+//    public String  getTitle(){
+//        return  titles;
+//    }
+//
+//    public  void setUrl(String url){
+//        this.url=url;
+//    }
+//
+//    public  String getUrl(){
+//        return url;
+//    }
 
 
 }

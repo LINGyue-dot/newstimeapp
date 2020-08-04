@@ -1,9 +1,9 @@
-package com.example.newstime;
+package com.example.newstime.Adapter;
 
 import org.antlr.v4.codegen.model.SrcOp;
 import org.litepal.crud.DataSupport;
 
-public class news_item {
+public class newsItem {
 
     public String title;
     public String Date;
@@ -11,7 +11,7 @@ public class news_item {
     public String imgUrl;
     public String webUrl;
 
-    public news_item(String title, String Date,String newsDescription, String imgUrl,String webUrl) {
+    public newsItem(String title, String Date, String newsDescription, String imgUrl, String webUrl) {
         this.imgUrl = imgUrl;
         this.title = title;
         this.Date = Date;

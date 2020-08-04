@@ -6,22 +6,14 @@ import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
-public class news extends DataSupport {
+public class news {
 
-    @SerializedName("code")
-    public int code;
 
     @SerializedName("msg")
     public String msg;
 
     @SerializedName("newslist")
      public List<newslist> newslists;
-
-    public List<newslist> getNewslists(){
-        return newslists;
-
-    }
-
 
 
 

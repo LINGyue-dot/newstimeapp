@@ -1,4 +1,4 @@
-package com.example.newstime;
+package com.example.newstime.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,16 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
+import com.example.newstime.R;
+
 import java.util.List;
 
-public class newsAdapter extends ArrayAdapter<news_item> {
+public class newsAdapter extends ArrayAdapter<newsItem> {
 
 
     private int resouceId;
 
 
     //适配器
-    public newsAdapter(@NonNull Context context, int textViewResouceId, List<news_item> objects) {
+    public newsAdapter(@NonNull Context context, int textViewResouceId, List<newsItem> objects) {
         super(context, textViewResouceId, objects);
         resouceId = textViewResouceId;
     }
@@ -26,7 +28,7 @@ public class newsAdapter extends ArrayAdapter<news_item> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        news_item newsObject = getItem(position);//获取当前news 的实例
+        newsItem newsObject = getItem(position);//获取当前news 的实例
 
         View view = LayoutInflater.from(getContext()).inflate(resouceId, parent, false);
         ImageView newsImage = view.findViewById(R.id.news_image);
@@ -40,6 +42,8 @@ public class newsAdapter extends ArrayAdapter<news_item> {
         return view;
 
     }
+
+
 
 
 }

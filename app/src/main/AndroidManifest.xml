@@ -16,6 +16,8 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         >
 
+        <activity android:name=".YiyunActivity"/>
+        <activity android:name=".LogoinActivity"/>
         <activity android:name=".WebActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
