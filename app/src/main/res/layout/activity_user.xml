@@ -24,6 +24,16 @@
         android:text="登入"
         />
 
+    <TextView
+        android:id="@+id/user_account"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:textColor="#000"
+        android:clickable="true"
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/yiyun_news"
@@ -45,6 +55,17 @@
         android:textColor="#000"
         android:clickable="true"
         android:text="修改密码"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/logo_out"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:textColor="#000"
+        android:clickable="true"
+        android:text="退出登入"
         android:visibility="gone"
         />
 

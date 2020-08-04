@@ -8,6 +8,7 @@
     <list>
         <mapping class="com.example.newstime.Gson.newslist"/>
         <mapping class="com.example.newstime.Gson.yiyunlist"/>
+        <mapping class="com.example.newstime.util.Account"/>
     </list>
 
 </litepal>
