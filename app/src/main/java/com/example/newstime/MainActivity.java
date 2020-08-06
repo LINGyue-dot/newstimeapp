@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //接收注册 传来的数据
+        //接收注册登入 传来的数据
         isShow = getIntent().getBooleanExtra("isShow", false);
         String id = getIntent().getStringExtra("id");
 

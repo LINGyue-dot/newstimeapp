@@ -65,8 +65,8 @@ public class ChangeActivity extends AppCompatActivity {
                             }else {
                                 showToast("原密码错误修改失败");
                                 change_password.setText("");
-                                break;
                             }
+                            break;
                         }
 
                         if (!isLive){

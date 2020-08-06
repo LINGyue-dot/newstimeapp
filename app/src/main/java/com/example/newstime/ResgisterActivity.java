@@ -2,6 +2,8 @@ package com.example.newstime;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.newstime.Mysqldb.UserDao;
+import com.example.newstime.Mysqldb.Userinfo;
 import com.example.newstime.util.Account;
 import com.example.newstime.util.ToastUtils;
 
@@ -21,10 +25,14 @@ import static org.litepal.LitePalApplication.getContext;
 
 public class ResgisterActivity extends AppCompatActivity {
 
-    private EditText  id_register ;
-    private  EditText password_register;
-    private  EditText password_registers;
-    private Button  button_register;
+    private EditText id_register;
+    private EditText password_register;
+    private EditText password_registers;
+    private Button button_register;
+
+
+    private Handler mainHandler;//主线程
+    private UserDao dao;// 用户数据库操作类
 
 
     @Override
@@ -34,70 +42,112 @@ public class ResgisterActivity extends AppCompatActivity {
 
 
         //初始化
-        id_register =findViewById(R.id.id_register);
-        password_register=findViewById(R.id.password_register);
-        password_registers=findViewById(R.id.password_registers);
-        button_register =findViewById(R.id.button_register);
+        id_register = findViewById(R.id.id_register);
+        password_register = findViewById(R.id.password_register);
+        password_registers = findViewById(R.id.password_registers);
+        button_register = findViewById(R.id.button_register);
+
+        dao = new UserDao();
+
+        mainHandler = new Handler(getMainLooper());//获取主线程
 
         //注册按钮绑定事件
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isLive =false;
-                String id_register_s= id_register.getText().toString();
-                String password_register_s= password_register.getText().toString();
-                String password_registers_s=  password_registers.getText().toString();
-                if((!id_register_s.equals("")) && (!password_register_s.equals(""))
-                &&(!password_registers_s.equals(""))){
-                    //遍历数据库
-                    List<Account> A = DataSupport.findAll(Account.class);
-                    for(Account B :A){
-                        if(B.ids.equals(id_register_s) ){
-                            showToast("该用户名已被注册");
-                            isLive= true;
-                            break;
-                        }
-                    }
-                    //如果不存该id
-                    if(!isLive){
-                        if(!password_register_s.equals(password_registers_s))
-                        {
-                            showToast("两次密码不一致");
-                        }else {
-                            //存入本地数据库中
-                            Account E = new Account(id_register_s,password_register_s);
-                            E.save();
-                            showToast("注册成功");
-                            Intent intent =new Intent(ResgisterActivity.this,MainActivity.class);
-                            intent.putExtra("isShow",true);
-                            intent.putExtra("id",id_register_s);
-                            startActivity(intent);
-                        }
-                    }
-
-
-
-
-                }
-                else {
-                    showToast("请输入完整");
-                }
+                register();
             }
         });
 
     }
 
 
+    //注册
+    private void register() {
 
+        final String id = id_register.getText().toString().trim();
+        final String password = password_register.getText().toString().trim();
+        final String passwords = password_registers.getText().toString().trim();
+
+        if (TextUtils.isEmpty(id) || TextUtils.isEmpty(password) || TextUtils.isEmpty(passwords)) {
+            showToast("请输入完整");
+        } else if (!password.equals(passwords)) {
+            showToast("两次密码输入不同");
+        } else {
+            final Userinfo item = new Userinfo(id, password);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final List<Userinfo> list = dao.getAllUserList();
+                    boolean isLive = false;
+                    for (Userinfo A : list) {
+                        if (A.getId().equals(id)) {
+                            mainHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showToast("该用户名已存在");
+                                }
+                            });
+                            isLive = true;
+                            break;
+                        }
+                    }
+                    if (!isLive) {
+                        int iRow = UserDao.addUser(item);
+                        mainHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                showToast("注册成功");
+                                Intent intent = new Intent(ResgisterActivity.this, MainActivity.class);
+                                intent.putExtra("isShow", true);
+                                intent.putExtra("id", id);
+                                startActivity(intent);
+                            }
+                        });
+
+                    }
+
+//                Wrong  code;
+//                    mainHandler.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            boolean isLive = false;
+//                            for (Userinfo A : list) {
+//                                if (A.getId().equals(id)) {
+//                                    showToast("该用户名已存在");
+//                                    isLive = true;
+//                                    break;
+//                                }
+//                            }
+//                            if (!isLive) {
+//                                final Userinfo B = new Userinfo();
+//                                B.setId(id);
+//                                B.setUpass(password);
+//                                final int iRow =dao.addUser(B);
+//                                showToast("注册成功");
+//                                Intent intent = new Intent(ResgisterActivity.this, MainActivity.class);
+//                                intent.putExtra("isShow", true);
+//                                intent.putExtra("id", id);
+//                                startActivity(intent);
+//                            }
+//                        }
+//                    });
+                }
+            }).start();
+        }
+    }
 
 
     //Toast
-    public  void showToast(String A){
+    public void showToast(String A) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ToastUtils.showToast(getContext(),A);
+                ToastUtils.showToast(getContext(), A);
+
             }
         });
     }
 }
+
+
