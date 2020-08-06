@@ -19,6 +19,7 @@ public class UserFragment extends Fragment {
     private TextView userSet;
     private TextView userChange;
     private TextView yiyun;
+    private TextView user_account;
 
 
     @Nullable
@@ -34,6 +35,7 @@ public class UserFragment extends Fragment {
         userSet =view.findViewById(R.id.user_set);
         userChange =view.findViewById(R.id.user_change);
         yiyun =view.findViewById(R.id.yiyun_news);
+        user_account=view.findViewById(R.id.user_account);
 
 
 
@@ -47,6 +49,8 @@ public class UserFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
+
+        //登入
         userId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +59,8 @@ public class UserFragment extends Fragment {
             }
         });
 
+
+        //yiyun
         yiyun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,10 +69,13 @@ public class UserFragment extends Fragment {
             }
         });
 
+
+        //修改密码
         userChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent =new Intent(getActivity(),ChangeActivity.class);
+                intent.putExtra( "id",user_account.getText().toString().trim());
                 startActivity(intent);
             }
         });

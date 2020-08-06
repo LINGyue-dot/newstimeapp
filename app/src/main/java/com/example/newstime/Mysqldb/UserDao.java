@@ -44,7 +44,7 @@ public class UserDao extends DbOpenHelper {
      * @param upass
      * @return  Userinfo 实例
      */
-    public  Userinfo getUserByIdAndUpass(String id,String upass)
+    public   Userinfo getUserByIdAndUpass(String id,String upass)
     {
         Userinfo item =null;
         try {
@@ -74,7 +74,7 @@ public class UserDao extends DbOpenHelper {
      * @param item  实例
      * @return  int  影响的行号
      */
-    public static int addUser(Userinfo item){
+    public int addUser(Userinfo item){
         int iRow =0;
 
         try {
@@ -109,7 +109,7 @@ public class UserDao extends DbOpenHelper {
      * @param item  实例
      * @return  int  影响的行号
      */
-    public  int editUser(Userinfo item){
+    public   int  editUser(Userinfo item){
         int iRow =0;
         try {
             getConnection();// 取得连接信息

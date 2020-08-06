@@ -93,7 +93,7 @@ public class ResgisterActivity extends AppCompatActivity {
                         }
                     }
                     if (!isLive) {
-                        int iRow = UserDao.addUser(item);
+                        int iRow = dao.addUser(item);
                         mainHandler.post(new Runnable() {
                             @Override
                             public void run() {

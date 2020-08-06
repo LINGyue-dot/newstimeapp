@@ -96,7 +96,7 @@ public class LogoinActivity extends AppCompatActivity {
                             if(item==null){
                                 showToast("用户密码错误");
                             }else {
-                                showToast("登入成功");
+                                showToast("登入成功   Hello"+id);
                                 Intent intent =new Intent(LogoinActivity.this,MainActivity.class);
                                 intent.putExtra("isShow",true);
                                 intent.putExtra("id",id);
