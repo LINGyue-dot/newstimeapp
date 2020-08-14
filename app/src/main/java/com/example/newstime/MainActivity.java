@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         //接收注册登入 传来的数据
         isShow = getIntent().getBooleanExtra("isShow", false);
+
         String id = getIntent().getStringExtra("id");
 
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     public  void showView(String id){
         user_id.setVisibility(View.GONE);
         user_account.setVisibility(View.VISIBLE);
-        user_account.setText("Hello, " + id);
+        user_account.setText(id);
         user_change.setVisibility(View.VISIBLE);
         logo_out.setVisibility(View.VISIBLE);
     }

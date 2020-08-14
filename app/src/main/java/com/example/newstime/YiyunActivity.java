@@ -1,6 +1,9 @@
 package com.example.newstime;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ import com.example.newstime.Adapter.yiyunItem;
 import com.example.newstime.Gson.yiyun;
 import com.example.newstime.Gson.yiyunlist;
 import com.example.newstime.util.HttpUtil;
+import com.example.newstime.util.ToastUtils;
 import com.example.newstime.util.Utility;
 import com.google.gson.Gson;
 
@@ -31,6 +35,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static org.litepal.LitePalApplication.getContext;
+
 public class YiyunActivity extends AppCompatActivity {
 
     private List<yiyunItem> yiyunList = new ArrayList<>();
@@ -40,10 +46,14 @@ public class YiyunActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefresh;
     private static int x = 0;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_yiyun);
+
+        //
+        String id = getIntent().getStringExtra("id");//接收main传来的id
 
         //
         swipeRefresh = findViewById(R.id.swipe_freshs);
@@ -73,6 +83,34 @@ public class YiyunActivity extends AppCompatActivity {
                     getYiyunResponse();
             }
         });
+
+        //
+        adapter.setOnItemClickListener(new yiyunAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, yiyunAdapter.ViewName viewName, int position) {
+                switch (v.getId()){
+                    case R.id.yiyun_out:
+                        adapter.notifyDataSetChanged();
+                        if(id.isEmpty()){
+                            showToast("未登入");
+                        }else {
+                            addCollection(id, yiyunList.get(position).getYiyun_text());
+                        }
+                        break;
+                    case R.id.yiyun_in:
+                        adapter.notifyDataSetChanged();
+
+                        break;
+                }
+            }
+
+            @Override
+            public void onItemLongClick(View v) {
+
+            }
+        });
+
+
     }
 
     //发起亦云请求
@@ -135,4 +173,22 @@ public class YiyunActivity extends AppCompatActivity {
             }
         }
     };
+
+
+    private  void addCollection(String id,String text){
+
+    }
+
+
+
+
+    //Toast显示
+    public void showToast(String A){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ToastUtils.showToast(getContext(),A);
+            }
+        });
+    }
 }

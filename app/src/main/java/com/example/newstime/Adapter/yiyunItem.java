@@ -4,6 +4,7 @@ public class yiyunItem {
 
     private String yiyun_text;
     private  String yiyun_src;
+    private boolean isCollection;
 
     public yiyunItem(String yiyun_text,String yiyun_src){
         this.yiyun_text=yiyun_text;
@@ -17,4 +18,7 @@ public class yiyunItem {
     public String getYiyun_src(){
         return yiyun_src;
     }
+
+    public  Boolean getIsCollection(){return isCollection;}
+    public void setCollection(){isCollection=!isCollection;}
 }

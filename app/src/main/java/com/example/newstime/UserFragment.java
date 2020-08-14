@@ -65,6 +65,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent =new Intent(getActivity(), YiyunActivity.class);
+                intent.putExtra("id",user_account.getText().toString().trim());
                 startActivity(intent);
             }
         });
