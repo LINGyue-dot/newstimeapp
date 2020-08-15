@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView user_change;
     private TextView user_account;
     private TextView logo_out;
+    private TextView yiyun_collection;
     public  boolean isShow =false;
 
     @Override
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         user_change = findViewById(R.id.user_change);
         user_account = findViewById(R.id.user_account);
         logo_out = findViewById(R.id.logo_out);
+        yiyun_collection =findViewById(R.id.collection);
 
         if (isShow) {
             showView(id);
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         user_account.setText(id);
         user_change.setVisibility(View.VISIBLE);
         logo_out.setVisibility(View.VISIBLE);
+        yiyun_collection.setVisibility(View.VISIBLE);
     }
     //退出登入或者未登入
     public  void initView(){
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         user_account.setText("");
         user_change.setVisibility(View.GONE);
         logo_out.setVisibility(View.GONE);
+        yiyun_collection.setVisibility(View.GONE);
     }
 
 

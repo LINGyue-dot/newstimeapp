@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class UserCollection implements Serializable {
 
-    private  String id;
-    private String  yiyun;
-    private  String src;
+    private String id;
+    private String yiyun;
+    private String src;
 
     public UserCollection() {
 
@@ -33,6 +33,12 @@ public class UserCollection implements Serializable {
     }
 
     public void setSrc(String src) {
+        this.src = src;
+    }
+
+    public UserCollection(String id, String yiyun, String src) {
+        this.id = id;
+        this.yiyun = yiyun;
         this.src = src;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.newstime;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +20,9 @@ import com.example.newstime.Adapter.yiyunAdapter;
 import com.example.newstime.Adapter.yiyunItem;
 import com.example.newstime.Gson.yiyun;
 import com.example.newstime.Gson.yiyunlist;
+import com.example.newstime.Mysqldb.CollectionDao;
+import com.example.newstime.Mysqldb.UserCollection;
+import com.example.newstime.Mysqldb.UserDao;
 import com.example.newstime.util.HttpUtil;
 import com.example.newstime.util.ToastUtils;
 import com.example.newstime.util.Utility;
@@ -44,7 +48,9 @@ public class YiyunActivity extends AppCompatActivity {
     private TextView yiyunSrc;
     private yiyunAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
-    private static int x = 0;
+
+    private Handler mainHandler;//主线程
+    private CollectionDao dao;//用户数据库操作类
 
 
     @Override
@@ -58,16 +64,19 @@ public class YiyunActivity extends AppCompatActivity {
         //
         swipeRefresh = findViewById(R.id.swipe_freshs);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);//设置下拉进度条颜色
-        DataSupport.deleteAll("yiyunlist");
         for (int i = 0; i <= 20; i++)//一次加载20条
             getYiyunResponse();
         //初始化
 
+        yiyunAdapter.x=0;//用于判断activity 是收藏还是亦云
         RecyclerView recyclerView = findViewById(R.id.recycle_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new yiyunAdapter(yiyunList);
         recyclerView.setAdapter(adapter);
+
+        dao =new CollectionDao() ;
+        mainHandler = new Handler(getMainLooper());//获取主线程
 
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.addOnScrollListener(monScrollListener);
@@ -78,13 +87,12 @@ public class YiyunActivity extends AppCompatActivity {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                DataSupport.deleteAll("yiyunlist");
                 for (int i = 0; i <= 20; i++)
                     getYiyunResponse();
             }
         });
 
-        //
+        //收藏按钮的操作
         adapter.setOnItemClickListener(new yiyunAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, yiyunAdapter.ViewName viewName, int position) {
@@ -94,12 +102,15 @@ public class YiyunActivity extends AppCompatActivity {
                         if(id.isEmpty()){
                             showToast("未登入");
                         }else {
-                            addCollection(id, yiyunList.get(position).getYiyun_text());
+                            //添加
+                            addCollection(id, yiyunList.get(position).getYiyun_text(),
+                                    yiyunList.get(position).getYiyun_src());
                         }
                         break;
                     case R.id.yiyun_in:
                         adapter.notifyDataSetChanged();
-
+                        deleteCollection(id, yiyunList.get(position).getYiyun_text(),
+                                yiyunList.get(position).getYiyun_src());
                         break;
                 }
             }
@@ -175,9 +186,31 @@ public class YiyunActivity extends AppCompatActivity {
     };
 
 
-    private  void addCollection(String id,String text){
 
+    //加入服务器上的数据库中
+    private  void addCollection(String id,String text,String src){
+
+        final UserCollection item =new UserCollection(id,text,src);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dao.addCollection(item);
+                showToast("加入收藏成功");
+            }
+        }).start();
     }
+
+    //删除服务器上的数据库中的该短句
+    private  void deleteCollection(String id,String text,String src){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dao.delUserCollection(id,text);
+                showToast("取消收藏成功");
+            }
+        }).start();
+    }
+
 
 
 

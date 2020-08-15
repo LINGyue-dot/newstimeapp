@@ -20,6 +20,7 @@ public class UserFragment extends Fragment {
     private TextView userChange;
     private TextView yiyun;
     private TextView user_account;
+    private  TextView yiyun_collection;
 
 
     @Nullable
@@ -36,8 +37,7 @@ public class UserFragment extends Fragment {
         userChange =view.findViewById(R.id.user_change);
         yiyun =view.findViewById(R.id.yiyun_news);
         user_account=view.findViewById(R.id.user_account);
-
-
+        yiyun_collection=view.findViewById(R.id.collection);
 
         return view;
 
@@ -77,6 +77,16 @@ public class UserFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent =new Intent(getActivity(),ChangeActivity.class);
                 intent.putExtra( "id",user_account.getText().toString().trim());
+                startActivity(intent);
+            }
+        });
+
+        //收藏
+        yiyun_collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(getActivity(),YiyunCollectionActivity.class);
+                intent.putExtra("id",user_account.getText().toString().trim());
                 startActivity(intent);
             }
         });

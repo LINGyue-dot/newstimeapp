@@ -16,6 +16,7 @@ public class yiyunAdapter extends RecyclerView.Adapter<yiyunAdapter.ViewHolder>
         implements View.OnClickListener {
 
     private List<yiyunItem> yiyunList;
+    public  static  int  x;// 用于判断activity 是收藏还是亦云
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -38,9 +39,7 @@ public class yiyunAdapter extends RecyclerView.Adapter<yiyunAdapter.ViewHolder>
             view.setOnClickListener(yiyunAdapter.this);
             yiyunIn.setOnClickListener(yiyunAdapter.this);
             yiyunOut.setOnClickListener(yiyunAdapter.this);
-
         }
-
     }
 
 
@@ -79,6 +78,11 @@ public class yiyunAdapter extends RecyclerView.Adapter<yiyunAdapter.ViewHolder>
         }else {
             holder.yiyunOut.setVisibility(View.VISIBLE);
             holder.yiyunIn.setVisibility(View.GONE);
+        }
+
+        if(x==1){
+            holder.yiyunOut.setVisibility(View.GONE);
+            holder.yiyunIn.setVisibility(View.VISIBLE);
         }
 
 
@@ -129,12 +133,5 @@ public class yiyunAdapter extends RecyclerView.Adapter<yiyunAdapter.ViewHolder>
                     break;
             }
         }
-
     }
-
-    private void showIn() {
-
-    }
-
-
 }

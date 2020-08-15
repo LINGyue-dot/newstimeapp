@@ -16,6 +16,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         >
 
+        <activity android:name=".YiyunCollectionActivity"/>
         <activity android:name=".ChangeActivity"/>
         <activity android:name=".ResgisterActivity"/>
         <activity android:name=".YiyunActivity"/>

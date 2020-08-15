@@ -10,22 +10,24 @@ public class CollectionDao extends DbOpenHelper {
 
 
     /*
-     * 用户数据库操作类
+     * 通过id 查询
+     *收藏数据库操作类
      * 实现CURD
      *  */
     //查询所有收藏信息   R
-    public List<UserCollection> getAllCollectionList() {
+    public List<UserCollection> getById(String id) {
         List<UserCollection> list = new ArrayList<>();
         try {
             getConnection();// 取得连接信息
 
-            String sql = "select * from Collection";
+            String sql = "select * from Collection where id=?";
             pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1,id);
             rs = pStmt.executeQuery();
 
             while (rs.next()) {
                 UserCollection item = new UserCollection();
-                item.setId(rs.getString("id"));
+                item.setId(id);
                 item.setYiyun(rs.getString("yiyun"));
                 item.setSrc(rs.getString("src"));
                 list.add(item);
@@ -38,7 +40,6 @@ public class CollectionDao extends DbOpenHelper {
         }
         return list;
     }
-
 
 
 
@@ -77,14 +78,14 @@ public class CollectionDao extends DbOpenHelper {
      * @param id 和 yiyun
      * @return int  影响的行号
      */
-    public int delUserCollection(int id,String yiyun) {
+    public int delUserCollection(String  id,String yiyun) {
         int iRow = 0;
         try {
             getConnection();// 取得连接信息
 
             String sql = "delete from Collection where id=? and yiyun=?";
             pStmt = conn.prepareStatement(sql);
-            pStmt.setInt(1, id);
+            pStmt.setString(1, id);
             pStmt.setString(2, yiyun);
             iRow = pStmt.executeUpdate();
 

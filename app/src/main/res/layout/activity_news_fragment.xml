@@ -36,7 +36,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/vector_drawable_left" />
+                android:background="@drawable/ic_banner" />
         </RelativeLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
