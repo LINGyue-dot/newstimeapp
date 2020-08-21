@@ -125,11 +125,10 @@ public class yiyunAdapter extends RecyclerView.Adapter<yiyunAdapter.ViewHolder>
             switch (view.getId()) {
                 case R.id.yiyun_in:
                     mOnItemClickListener.onItemClick(view, ViewName.PRACTISE, position);
-                    yiyunList.get(position).setCollection();//改变收藏按钮
+
                     break;
-                default:
+                case R.id.yiyun_out:
                     mOnItemClickListener.onItemClick(view, ViewName.ITEM, position);
-                    yiyunList.get(position).setCollection();//改变收藏按钮
                     break;
             }
         }

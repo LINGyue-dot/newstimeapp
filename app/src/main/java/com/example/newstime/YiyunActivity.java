@@ -64,6 +64,7 @@ public class YiyunActivity extends AppCompatActivity {
         //
         swipeRefresh = findViewById(R.id.swipe_freshs);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);//设置下拉进度条颜色
+        DataSupport.deleteAll("yiyunlist");//删除原来数据库
         for (int i = 0; i <= 20; i++)//一次加载20条
             getYiyunResponse();
         //初始化
@@ -87,6 +88,7 @@ public class YiyunActivity extends AppCompatActivity {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                DataSupport.deleteAll("yiyunlist");//删除原来数据库
                 for (int i = 0; i <= 20; i++)
                     getYiyunResponse();
             }
@@ -105,12 +107,15 @@ public class YiyunActivity extends AppCompatActivity {
                             //添加
                             addCollection(id, yiyunList.get(position).getYiyun_text(),
                                     yiyunList.get(position).getYiyun_src());
+                            yiyunList.get(position).setCollection();//改变收藏按钮
                         }
                         break;
                     case R.id.yiyun_in:
                         adapter.notifyDataSetChanged();
                         deleteCollection(id, yiyunList.get(position).getYiyun_text(),
                                 yiyunList.get(position).getYiyun_src());
+                        yiyunList.get(position).setCollection();//改变收藏按钮
+
                         break;
                 }
             }
@@ -146,7 +151,7 @@ public class YiyunActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-                Toast.makeText(YiyunActivity.this, "加载失败", Toast.LENGTH_SHORT).show();
+                showToast("加载失败");
             }
         });
     }

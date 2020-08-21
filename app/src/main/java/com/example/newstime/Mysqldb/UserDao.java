@@ -19,7 +19,7 @@ public class UserDao extends DbOpenHelper {
             getConnection();// 取得连接信息
 
             String sql="select * from NewsUser";
-            pStmt =conn.prepareStatement(sql);
+            pStmt =conn.prepareStatement(sql); //预编译
             rs=pStmt.executeQuery();
 
             while(rs.next()){

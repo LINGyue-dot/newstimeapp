@@ -116,7 +116,6 @@ public class YiyunCollectionActivity extends AppCompatActivity  {
                 mainHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        showToast("成功");
                         adapter.notifyDataSetChanged();
                         swipeRefresh.setRefreshing(false);//刷新事件结束隐藏进度条
                     }

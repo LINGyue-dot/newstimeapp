@@ -31,7 +31,7 @@ public class DbOpenHelper {
      //取得连接方法
     public  static  void getConnection(){
         try{
-            Class.forName(CLS).newInstance();
+            Class.forName(CLS).newInstance(); //加载jdbc驱动
             conn = DriverManager.getConnection(URL,USER,PWD);
         } catch (Exception e) {
             e.printStackTrace();

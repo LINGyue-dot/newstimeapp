@@ -45,7 +45,7 @@ public class Utility {
         if (!TextUtils.isEmpty(response)) {
             try {
                 yiyun A = new Gson().fromJson(response, yiyun.class);
-//                DataSupport.deleteAll("yiyunlist");//删除原来数据库
+//
                 for (yiyunlist B : A.yiyunList) {
                     yiyunlist C = new yiyunlist(B.yiyunText, B.yiyunSrc);
                     C.save();
